@@ -18,7 +18,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+If you have a Rails application use the `rails g rack:metrics:install` command to generate the initializer.
 
 ## Contributing
 
