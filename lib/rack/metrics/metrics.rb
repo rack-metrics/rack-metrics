@@ -4,6 +4,7 @@ module Rack
   module Metrics
     class << self
       attr_writer :config
+      attr_accessor :start_processing
 
       def config
         @config ||= Rack::Metrics::Config.new
@@ -13,17 +14,13 @@ module Rack
         Thread.current[:rack_metrics]
       end
 
-      def create_current(data)
-        self.current = Metrics::Request.new(data)
-      end
-
       def current=(c)
         Thread.current[:rack_metrics] = c
       end
 
       def push_data(data, env)
         return unless Rack::Metrics.config.environments.include?(env.to_sym)
-        @endpoint = 'https://rack-metrics.com/api/v1/metrics'
+        @endpoint = 'https://rack-metrics.com/api/v1/1'
         log("=> Pushing metrics data")
         begin
           uri = URI(@endpoint)
@@ -31,6 +28,7 @@ module Rack
         rescue => e
           log "=> Error while pushing metrics data: #{e.message}"
         end
+        Metrics.current = nil
       end
 
       def log(message)

@@ -4,7 +4,7 @@ module Rack
       attr_accessor :api_key, :environments
 
       def initialize
-        @environments = [:development, :production]
+        @environments = [:production]
       end
     end
   end

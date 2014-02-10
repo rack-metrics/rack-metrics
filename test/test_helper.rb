@@ -1,4 +1,23 @@
+ENV["RAILS_ENV"] ||= "internal_test"
+ENV['DATABASE_URL'] = 'sqlite3://localhost/:memory:'
 require 'bundler/setup'
 require 'minitest/autorun'
+require 'minitest/spec'
+require "dummy/my_app"
+require 'rails/test_help'
 require 'rack/metrics'
+
+
+
+ActiveRecord::Schema.define do
+  create_table :posts do |t|
+  end
+
+  create_table :comments do |t|
+    t.integer :post_id
+  end
+end
+
+class Post < ActiveRecord::Base; end
+class Comment < ActiveRecord::Base; end
 
