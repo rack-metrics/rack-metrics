@@ -1,5 +1,7 @@
 # Rack::Metrics
 
+[![Build Status](https://travis-ci.org/EvolutionSoft/rack-metrics.png?branch=master)](https://travis-ci.org/EvolutionSoft/rack-metrics)
+
 TODO: Write a gem description
 
 ## Installation
