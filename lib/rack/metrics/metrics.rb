@@ -18,8 +18,7 @@ module Rack
         Thread.current[:rack_metrics] = c
       end
 
-      def push_data(data, env)
-        return unless Rack::Metrics.config.environments.include?(env.to_sym)
+      def push_data(data)
         @endpoint = 'https://rack-metrics.com/api/v1/1'
         log("=> Pushing metrics data")
         begin

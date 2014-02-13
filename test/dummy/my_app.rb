@@ -30,7 +30,7 @@ module MyApp
     end
   end
 end
-Rack::Metrics.config.environments = [:test]
+Rack::Metrics.config.environments = [:internal_test]
 class SiteController < ActionController::Base
   include Rails.application.routes.url_helpers
   layout 'application'

@@ -20,6 +20,8 @@ module Rack
     end
 
     def self.subscribe
+      env = Rails.env || ENV['rack_env']
+      return unless Rack::Metrics.config.environments.include?(env.to_sym)
       ActiveSupport::Notifications.subscribe "start_processing.action_controller" do |*args|
         Metrics.current = Event.new *args
         Metrics.current.stack = Stack.new
@@ -70,10 +72,9 @@ module Rack
         memory = `ps -o rss -p #{Process::pid}`.chomp.split("\n").last.strip.to_i / 1024
         Metrics.current.payload['memory'] = memory.to_i
         begin
-          env = Rails.env || ENV['rack_env']
           data = Metrics.current.to_json
           thread = Thread.new do
-            Metrics.push_data(data, env)
+            Metrics.push_data(data)
           end
         rescue Exception => e
           Metrics.log("Rack-Metrics exception raised: #{e.inspect}")
