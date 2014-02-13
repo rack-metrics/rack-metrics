@@ -1,4 +1,4 @@
-ENV["RAILS_ENV"] ||= "internal_test"
+ENV["RAILS_ENV"] = "internal_test"
 ENV['DATABASE_URL'] = 'sqlite3://localhost/:memory:'
 require 'bundler/setup'
 require 'minitest/autorun'
