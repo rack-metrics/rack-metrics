@@ -8,7 +8,7 @@ TODO: Write a gem description
 
 Add this line to your application's Gemfile:
 
-    gem 'rack-metrics', github: 'EvolutionSoft/rack-metrics'
+    gem 'rack-metrics'
 
 And then execute:
 
