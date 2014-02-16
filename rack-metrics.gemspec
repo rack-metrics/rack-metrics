@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Rack::Metrics::VERSION
   spec.authors       = ["Greg Molnar"]
   spec.email         = ["molnargerg@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = %q{rack-metrics is a performance monitoring tool.}
+  spec.summary       = %q{A performance monitoring tool.}
   spec.homepage      = ""
   spec.license       = "MIT"
 
