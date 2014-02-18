@@ -20,12 +20,12 @@ module Rack
 
       def push_data(data)
         @endpoint = 'https://rack-metrics.com/api/v1'
-        log("=> Pushing metrics data")
+        log("[Rack Metrics] => Pushing metrics data")
         begin
           uri = URI(@endpoint)
           res = Net::HTTP.post_form(uri, 'api_key' => Rack::Metrics.config.api_key, 'api_version' => '1.1.0', 'data' => data)
         rescue => e
-          log "=> Error while pushing metrics data: #{e.message}"
+          log "[Rack Metrics] => Error while pushing metrics data: #{e.message}"
         end
         Metrics.current = nil
       end

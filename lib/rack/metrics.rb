@@ -47,7 +47,6 @@ module Rack
       end
 
       ActiveSupport::Notifications.subscribe "start_render_partial.action_view" do |*args|
-        # TODO: make it work with nested render partials
         render_partial = Event.new *args
         Metrics.current.stack<< render_partial
       end
@@ -77,7 +76,7 @@ module Rack
             Metrics.push_data(data)
           end
         rescue Exception => e
-          Metrics.log("Rack-Metrics exception raised: #{e.inspect}")
+          Metrics.log("[Rack-Metrics] exception raised: #{e.inspect}")
         end
       end
 
