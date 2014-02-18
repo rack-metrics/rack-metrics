@@ -1,7 +1,7 @@
 module Rack
   module Metrics
     class Railtie < Rails::Railtie
-      initializer "rack-metrics.configure_rails_initialization" do |app|
+      config.after_initialize do
         Metrics.subscribe
       end
     end
