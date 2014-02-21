@@ -96,8 +96,9 @@ module Rack
     end
   end
 end
-
-Rack::Metrics::Instrumenter.instrument_method(ActionView::PartialRenderer, :render, "start_render_partial.action_view")
+if defined?(ActionView)
+  Rack::Metrics::Instrumenter.instrument_method(ActionView::PartialRenderer, :render, "start_render_partial.action_view")
+end
 
 module Rack
   module Metrics

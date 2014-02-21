@@ -2,8 +2,16 @@ ENV["RAILS_ENV"] = "internal_test"
 ENV['DATABASE_URL'] = 'sqlite3://localhost/:memory:'
 require 'bundler/setup'
 require 'minitest/autorun'
-require 'minitest/spec'
-require "dummy/my_app"
+
+require "rails"
+case Rails.version
+when /3\../
+  require 'test/unit'
+  require "apps/rails3/my_app"
+when /4\../
+  require "apps/rails4/my_app"
+end
+
 require 'rails/test_help'
 require 'rack/metrics'
 
