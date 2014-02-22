@@ -15,6 +15,11 @@ class MetricsTest < ActiveSupport::TestCase
 		assert !Rack::Metrics.current.template.queries.empty?
 	end
 
+	test "it subscribes to query.moped" do
+		ActiveSupport::Notifications.instrument('query.moped'){}
+		assert !Rack::Metrics.current.template.queries.empty?
+	end
+
 	test "it subscribes to render_template.action_view" do
 		ActiveSupport::Notifications.instrument('render_template.action_view'){}
 		assert !Rack::Metrics.current.template.nil?

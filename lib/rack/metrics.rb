@@ -93,6 +93,19 @@ module Rack
           end
         end
       end
+
+      ActiveSupport::Notifications.subscribe "query.moped" do |*args|
+        query = Event.new *args
+        if Metrics.current.is_a?(Rack::Metrics::Event)
+          query.payload['stacktrace'] = Metrics.parse_stack(caller(2)).join("\r\n")
+          query.payload['sql'] = query.payload[:ops][0].log_inspect unless query.payload[:ops].nil? or !query.payload[:ops][0].respond_to(:log_inspect)
+          if Metrics.current.stack.empty?
+            Metrics.current.template.queries<< query
+          else
+            Metrics.current.stack.peek.queries<< query
+          end
+        end
+      end
     end
   end
 end
