@@ -19,6 +19,7 @@ module Rack
       end
 
       def push_data(data)
+        return if Rack::Metrics.config.api_key.blank?
         endpoint = 'https://api.rack-metrics.com'
         log("[Rack Metrics] => Pushing metrics data")
         begin
