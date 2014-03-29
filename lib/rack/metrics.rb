@@ -68,6 +68,7 @@ module Rack
         Metrics.current.end = finished
         Metrics.current.transaction_id = transaction_id
         Metrics.current.payload = payload
+        Metrics.current.payload['env'] = env
         memory = `ps -o rss -p #{Process::pid}`.chomp.split("\n").last.strip.to_i / 1024
         Metrics.current.payload['memory'] = memory.to_i
         begin
