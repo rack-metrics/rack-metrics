@@ -38,12 +38,16 @@ module Rack
       end
 
       ActiveSupport::Notifications.subscribe "render_template.action_view" do |name, time, finished, transaction_id, payload|
-        Metrics.current.template.name = name
-        Metrics.current.template.time = time
-        Metrics.current.template.end = finished
-        Metrics.current.template.transaction_id = transaction_id
-        Metrics.current.template.payload = payload
-        Metrics.current.template.payload[:identifier] = Metrics.current.template.payload[:identifier].gsub("#{Rails.root}/", '') unless Metrics.current.template.payload[:identifier].nil?
+        begin
+          Metrics.current.template.name = name
+          Metrics.current.template.time = time
+          Metrics.current.template.end = finished
+          Metrics.current.template.transaction_id = transaction_id
+          Metrics.current.template.payload = payload
+          Metrics.current.template.payload[:identifier] = Metrics.current.template.payload[:identifier].gsub("#{Rails.root}/", '') unless Metrics.current.template.payload[:identifier].nil?
+        rescue Exception => e
+          Metrics.log("[Rack-Metrics] exception raised: #{e.inspect}")
+        end
       end
 
       ActiveSupport::Notifications.subscribe "start_render_partial.action_view" do |*args|
