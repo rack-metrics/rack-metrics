@@ -19,12 +19,12 @@ module Rack
       end
 
       def push_data(data)
-        return if Rack::Metrics.config.api_key.blank?
+        return if ENV['RACK_METRICS_API_KEY'].blank?
         endpoint = 'https://api.rack-metrics.com'
         log("[Rack Metrics] => Pushing metrics data")
         begin
           uri = URI(endpoint)
-          res = Net::HTTP.post_form(uri, 'api_key' => Rack::Metrics.config.api_key, 'api_version' => '1.1.0', 'data' => data)
+          res = Net::HTTP.post_form(uri, 'api_key' => ENV['RACK_METRICS_API_KEY'], 'api_version' => '1.1.0', 'data' => data)
         rescue => e
           log "[Rack Metrics] => Error while pushing metrics data: #{e.message}"
         end
