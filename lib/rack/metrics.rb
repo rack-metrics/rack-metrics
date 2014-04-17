@@ -20,7 +20,7 @@ module Rack
     end
 
     def self.subscribe
-      env = Rails.env || ENV['rack_env']
+      env = Rails.env || ENV['rack_env'] || ENV['RAILS_ENV']
       return unless Rack::Metrics.config.environments.include?(env.to_sym)
       ActiveSupport::Notifications.subscribe "start_processing.action_controller" do |*args|
         Metrics.current = Event.new *args
